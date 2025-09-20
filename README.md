@@ -7,5 +7,4 @@ Developed and tested on **Windows** with **Flutter version 3.35.4**.
 - 🔑 **Login Page** with email & password form  
 - 🏗 **State Management with BLoC**  
 - 🧩 **Reusable Custom Widgets** (e.g., button, checkbox, input field, etc.)  
-- 🎨 Follows Material Design principles  
  
