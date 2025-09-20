@@ -481,7 +481,7 @@ class VMessageItem extends StatelessWidget {
       ),
       VButton(
         text: "Refresh",
-        onTap: action,
+        onPressed: action,
       ),
     ];
   }

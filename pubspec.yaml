@@ -22,7 +22,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 dependency_overrides:
-  win32: ^5.5.4 # 🔥 paksa semua paket pakai win32 terbaru
+  win32: ^5.5.4 # Force package using latest win32
 
 flutter:
   uses-material-design: true

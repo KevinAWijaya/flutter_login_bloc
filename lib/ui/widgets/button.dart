@@ -2,147 +2,109 @@ import 'package:flutter/material.dart';
 
 import '../../core/color.dart';
 import '../../core/constants/size.dart';
-import '../../core/constants/space.dart';
 import 'text.dart';
 
+/// [VButton] is a reusable custom button with support for:
+/// - Text and optional icon
+/// - Disabled state
+/// - Ripple/overlay effect following Material Design standards
+/// - Customizable color, border, and size
+///
+/// Used to create consistent buttons across the application.
 class VButton extends StatelessWidget {
   const VButton({
     super.key,
     required this.text,
-    this.textColor = VColor.white,
     this.textSize = textSizeMedium,
+    this.textColor = VColor.onSecondary,
+    this.textPadding = marginSmall,
     this.icon,
-    this.iconColor = VColor.white,
     this.iconSize = 40,
     this.iconMargin = marginSmall,
-    this.onTap,
-    this.buttonColor = VColor.primary,
+    this.iconColor = VColor.onSecondary,
+    this.buttonColor = VColor.secondary,
     this.borderColor = Colors.transparent,
-    this.borderWitdh = 0,
-    this.disabled = false,
+    this.borderWidth = 0,
+    this.onPressed,
+    this.isDisabled = false,
   });
-
-  final Color buttonColor;
 
   final String text;
   final Color textColor;
   final double textSize;
 
+  /// Padding around the text inside the button.
+  final double textPadding;
+
+  /// Optional icon displayed to the left of the text.
   final IconData? icon;
   final Color iconColor;
   final double iconSize;
+
+  /// Space between the icon and the text.
   final double iconMargin;
+  final Color buttonColor;
 
   final Color borderColor;
-  final double borderWitdh;
+  final double borderWidth;
 
-  final bool disabled;
+  /// Indicates whether the button is disabled.
+  ///
+  /// If [true], the button cannot be pressed and appears dimmed.
+  final bool isDisabled;
 
-  final void Function()? onTap;
+  /// Callback triggered when the button is pressed.
+  ///
+  /// Ignored if [isDisabled] is true.
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: disabled ? null : onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: marginLarge, vertical: marginMedium),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          border: Border.all(color: borderColor, width: borderWitdh),
-          borderRadius: BorderRadius.circular(radiusMedium),
-          color: disabled ? VColor.primaryOpacity : buttonColor,
-        ),
-        width: double.infinity,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Visibility(
-              visible: icon != null,
-              child: Container(
-                margin: EdgeInsets.only(right: iconMargin),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: iconSize,
+    return Material(
+      color: isDisabled ? VColor.primaryOpacity : buttonColor,
+      borderRadius: BorderRadius.circular(radiusMedium),
+      child: InkWell(
+        onTap: isDisabled ? null : onPressed,
+        borderRadius: BorderRadius.circular(radiusMedium),
+        overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+          if (states.contains(WidgetState.pressed)) {
+            return VColor.white.withAlpha(50); // ripple effect
+          }
+          if (states.contains(WidgetState.hovered)) {
+            return VColor.black.withAlpha(20); // hover effect
+          }
+          return null;
+        }),
+        child: Container(
+          padding: EdgeInsets.all(textPadding),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            border: Border.all(color: borderColor, width: borderWidth),
+            borderRadius: BorderRadius.circular(radiusMedium),
+          ),
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (icon != null)
+                Padding(
+                  padding: EdgeInsets.only(right: iconMargin),
+                  child: Icon(
+                    icon,
+                    color: iconColor,
+                    size: iconSize,
+                  ),
                 ),
+              VText(
+                text,
+                fontSize: textSize,
+                isBold: true,
+                color: textColor,
               ),
-            ),
-            VText(
-              text,
-              fontSize: textSize,
-              isBold: true,
-              color: textColor,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    );
-  }
-}
-
-class VButtonLoading extends StatelessWidget {
-  const VButtonLoading(
-    this.title, {
-    super.key,
-    this.textColor = VColor.white,
-    this.textColorDisabled = VColor.grey1,
-    this.buttonColor = VColor.primary,
-    this.buttonColorDisabled = VColor.primaryOpacity,
-    @required this.onPressed,
-    this.disabled = false,
-    this.textPadding = 24,
-    this.borderRadius = 10,
-    this.isLoading = false,
-  });
-  final String title;
-  final Color textColor;
-  final Color textColorDisabled;
-  final Color buttonColor;
-  final Color buttonColorDisabled;
-  final VoidCallback? onPressed;
-  final bool disabled;
-  final double textPadding;
-  final double borderRadius;
-  final bool isLoading;
-
-  @override
-  Widget build(BuildContext context) {
-    return AbsorbPointer(
-      absorbing: disabled,
-      child: InkWell(
-          onTap: onPressed,
-          child: Container(
-            padding: EdgeInsets.all(textPadding),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius),
-              color: !disabled ? buttonColor : buttonColorDisabled,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                VText(
-                  title,
-                  isBold: true,
-                  color: !disabled ? textColor : textColorDisabled,
-                ),
-                isLoading
-                    ? Row(
-                        children: [
-                          spaceHorizontalMedium,
-                          const SizedBox(
-                            height: textSizeLarge,
-                            width: textSizeLarge,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 5,
-                              valueColor: AlwaysStoppedAnimation<Color>(VColor.white),
-                            ),
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink()
-              ],
-            ),
-          )),
     );
   }
 }

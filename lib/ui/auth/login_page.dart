@@ -7,6 +7,7 @@ import 'package:wisdom_pos_test/bloc/navigation/navigation_bloc.dart';
 import 'package:wisdom_pos_test/core/color.dart';
 import 'package:wisdom_pos_test/core/constants/constants.dart';
 import 'package:wisdom_pos_test/ui/navigation/navigation_page.dart';
+import 'package:wisdom_pos_test/ui/widgets/button.dart';
 import 'package:wisdom_pos_test/ui/widgets/loading_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -125,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                                   shape: const CircleBorder(),
                                   checkColor: VColor.primary,
                                   activeColor: Colors.white,
-                                  fillColor: MaterialStateProperty.all(Colors.white),
+                                  fillColor: WidgetStateProperty.all(Colors.white),
                                   side: BorderSide.none,
                                   onChanged: (_) {
                                     context.read<LoginBloc>().add(ToggleRememberMe());
@@ -147,14 +148,8 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       width: double.infinity,
                       height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: VColor.secondary,
-                          textStyle: const TextStyle(color: VColor.onSecondary),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
+                      child: VButton(
+                        text: "Login",
                         onPressed: state.status == LoginStatus.loading
                             ? null
                             : () {
@@ -170,7 +165,6 @@ class _LoginPageState extends State<LoginPage> {
 
                                 context.read<LoginBloc>().add(LoginSubmitted(email, password));
                               },
-                        child: const Text("Login", style: TextStyle(color: Colors.white)),
                       ),
                     ),
                   ],

@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:wisdom_pos_test/core/constants/space.dart';
 import 'package:wisdom_pos_test/ui/widgets/button.dart';
+import 'package:wisdom_pos_test/ui/widgets/button_loading.dart';
 import 'package:wisdom_pos_test/ui/widgets/check_box.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
 
   @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  bool isLoading = false;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: _body()),
+      body: SafeArea(
+        child: _body(),
+      ),
     );
   }
 
@@ -17,9 +26,23 @@ class MenuScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const VButton(text: "Custom Button"),
+          VButton(
+            text: "Custom Button",
+            onPressed: () {
+              setState(() {
+                isLoading = !isLoading;
+              });
+            },
+          ),
+          spaceVerticalLarge,
+          VButtonLoading(
+            text: "Custom Button",
+            onPressed: () {},
+            isLoading: isLoading,
+          ),
           spaceVerticalLarge,
           VCheckbox(
+            isChecked: isLoading,
             onChanged: (value) {},
           )
         ],
