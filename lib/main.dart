@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
           title: 'Wisdom POS',
           theme: ThemeData(
             primarySwatch: Colors.indigo,
-            scaffoldBackgroundColor: VColor.primary,
+            scaffoldBackgroundColor: VColor.secondary,
             textTheme: GoogleFonts.montserratTextTheme(),
           ),
           home: const LoginPage(),

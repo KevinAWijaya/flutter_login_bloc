@@ -18,9 +18,10 @@ class VButtonLoading extends StatelessWidget {
   const VButtonLoading({
     super.key,
     required this.text,
-    this.textColor = VColor.onSecondary,
+    this.textSize = textSizeMedium,
+    this.textColor = VColor.onPrimary,
     this.textColorDisabled = VColor.grey1,
-    this.buttonColor = VColor.secondary,
+    this.buttonColor = VColor.primary,
     this.buttonColorDisabled = VColor.primaryOpacity,
     this.onPressed,
     this.isDisabled = false,
@@ -29,11 +30,9 @@ class VButtonLoading extends StatelessWidget {
     this.isLoading = false,
   });
 
-  /// The text displayed inside the button.
   final String text;
-
-  /// Text color when enabled.
   final Color textColor;
+  final double textSize;
 
   /// Text color when disabled.
   final Color textColorDisabled;
@@ -89,6 +88,7 @@ class VButtonLoading extends StatelessWidget {
                 text,
                 isBold: true,
                 color: !isDisabled ? textColor : textColorDisabled,
+                fontSize: textSize,
               ),
               if (isLoading)
                 Container(

@@ -16,7 +16,6 @@ class CustomBottomNavigationBarPage extends StatelessWidget {
         if (state is NavigationSelected) {
           selectedIndex = state.selectedIndex;
         }
-
         return BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: selectedIndex,

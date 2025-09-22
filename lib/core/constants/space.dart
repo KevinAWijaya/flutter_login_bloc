@@ -15,9 +15,9 @@ Widget spaceHorizontalLarge = const SizedBox(width: marginLarge);
 Widget spaceHorizontalSuperLarge = const SizedBox(width: marginExtraLarge);
 Widget spaceHorizontalCustom(double value) => SizedBox(width: value);
 
-final borderRadiusSmall = BorderRadius.circular(radiusSmall);
-final borderRadiusMedium = BorderRadius.circular(radiusMedium);
-final borderRadiusLarge = BorderRadius.circular(radiusLarge);
-final borderRadiusExtraLarge = BorderRadius.circular(radiusExtraLarge);
-final borderRadiusSuperLarge = BorderRadius.circular(radiusSuperLarge);
-final borderRadiusMax = BorderRadius.circular(radiusMax);
+const borderRadiusSmall = BorderRadius.all(Radius.circular(radiusSmall));
+const borderRadiusMedium = BorderRadius.all(Radius.circular(radiusMedium));
+const borderRadiusLarge = BorderRadius.all(Radius.circular(radiusLarge));
+const borderRadiusExtraLarge = BorderRadius.all(Radius.circular(radiusExtraLarge));
+const borderRadiusSuperLarge = BorderRadius.all(Radius.circular(radiusSuperLarge));
+const borderRadiusMax = BorderRadius.all(Radius.circular(radiusMax));
