@@ -30,7 +30,7 @@ class VDatePicker extends StatefulWidget {
     this.primaryColor = VColor.primary,
     this.backgroundColor = VColor.primary,
     this.textColor = VColor.onPrimary,
-    this.dateBackgroundColor = VColor.accent,
+    this.dateBackgroundColor = VColor.onSurfaceContainer,
     this.dateTextColor = VColor.onPrimary,
     this.headerBackgroundColor = VColor.primary,
     this.headerTextColor = VColor.onPrimary,

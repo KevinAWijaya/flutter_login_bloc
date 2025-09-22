@@ -25,7 +25,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
-                color: VColor.accent,
+                color: VColor.onSurfaceContainerHigh,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Row(
@@ -63,7 +63,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: const BoxDecoration(
-              color: VColor.accent,
+              color: VColor.onSurfaceContainerHigh,
               shape: BoxShape.circle,
             ),
             child: const Icon(Icons.qr_code_scanner, color: Colors.white),

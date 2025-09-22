@@ -58,8 +58,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Wisdom POS',
           theme: ThemeData(
-            primarySwatch: Colors.indigo,
-            scaffoldBackgroundColor: VColor.secondary,
+            useMaterial3: true,
+            scaffoldBackgroundColor: VColor.surface,
             textTheme: GoogleFonts.montserratTextTheme(),
           ),
           home: const LoginPage(),

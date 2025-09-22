@@ -22,31 +22,36 @@ class CustomBottomNavigationBarPage extends StatelessWidget {
           onTap: (index) {
             context.read<NavigationBloc>().add(SelectTabEvent(index));
           },
-          backgroundColor: VColor.primary,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
+          backgroundColor: VColor.onSurfaceContainer,
+          selectedItemColor: VColor.onSurface,
+          unselectedItemColor: VColor.onSurface,
           showSelectedLabels: true,
           showUnselectedLabels: true,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart),
-              label: 'New Order',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart),
-              label: 'Report',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu),
-              label: 'Menu',
-            ),
+          items: [
+            _buildNavItem(Icons.home, "Home", 0, selectedIndex),
+            _buildNavItem(Icons.shopping_cart, "New Order", 1, selectedIndex),
+            _buildNavItem(Icons.bar_chart, "Report", 2, selectedIndex),
+            _buildNavItem(Icons.menu, "Menu", 3, selectedIndex),
           ],
         );
       },
+    );
+  }
+
+  BottomNavigationBarItem _buildNavItem(IconData icon, String label, int index, int selectedIndex) {
+    return BottomNavigationBarItem(
+      icon: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: index == selectedIndex ? Colors.blue : Colors.transparent,
+        ),
+        padding: const EdgeInsets.all(8),
+        child: Icon(
+          icon,
+          color: index == selectedIndex ? Colors.white : VColor.onSurface,
+        ),
+      ),
+      label: label,
     );
   }
 }

@@ -30,9 +30,9 @@ class VInputTextRiple extends StatefulWidget {
     this.onChanged,
     this.backgroundColor = VColor.primary,
     this.borderColor = VColor.primary,
-    this.iconColor = VColor.onAccent,
-    this.textColor = VColor.onAccent,
-    this.cursorColor = VColor.onAccent,
+    this.iconColor = VColor.onSurface,
+    this.textColor = VColor.onSurface,
+    this.cursorColor = VColor.onSurface,
     this.prefixIcon,
     this.suffixIcon,
   }) : super(key: key);
