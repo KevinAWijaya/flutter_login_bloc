@@ -18,7 +18,7 @@ class VLogoCircular extends StatelessWidget {
         color: VColor.grey1,
       ),
       child: const Image(
-        image: AssetImage("${imagePath}img_logo_psi_black.png"),
+        image: AssetImage("${imagePath}logo.png"),
         fit: BoxFit.contain,
       ),
     );

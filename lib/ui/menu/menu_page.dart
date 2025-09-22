@@ -3,6 +3,7 @@ import 'package:wisdom_pos_test/core/constants/space.dart';
 import 'package:wisdom_pos_test/ui/widgets/button.dart';
 import 'package:wisdom_pos_test/ui/widgets/button_loading.dart';
 import 'package:wisdom_pos_test/ui/widgets/check_box.dart';
+import 'package:wisdom_pos_test/ui/widgets/input_text.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -44,6 +45,18 @@ class _MenuScreenState extends State<MenuScreen> {
           VCheckbox(
             isChecked: isLoading,
             onChanged: (value) {},
+          ),
+          spaceVerticalLarge,
+          const VInputText(
+            obscureText: true,
+          ),
+          spaceVerticalLarge,
+          VInputText(
+            hint: "Password",
+            prefixIcon: const Icon(Icons.lock),
+            suffixIcon: const Icon(Icons.visibility),
+            onSuffixTap: () {},
+            isUseRipleEffect: true,
           )
         ],
       ),

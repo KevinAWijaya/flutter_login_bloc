@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
             }
           },
           builder: (context, state) {
-            return LoadingOverlay(
+            return VLoadingOverlay(
               isLoading: state.status == LoginStatus.loading,
               child: Padding(
                 padding: const EdgeInsets.all(24),

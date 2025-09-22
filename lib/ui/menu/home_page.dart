@@ -7,6 +7,7 @@ import 'package:wisdom_pos_test/bloc/service/sales_event.dart';
 import 'package:wisdom_pos_test/bloc/service/sales_state.dart';
 import 'package:wisdom_pos_test/core/color.dart';
 import 'package:wisdom_pos_test/core/constants/constants.dart';
+import 'package:wisdom_pos_test/core/constants/space.dart';
 import 'package:wisdom_pos_test/data/models/ticket.dart';
 import 'package:wisdom_pos_test/data/repositories/auth_repository.dart';
 import 'package:wisdom_pos_test/data/repositories/session_repository.dart';
@@ -14,6 +15,7 @@ import 'package:wisdom_pos_test/ui/auth/login_page.dart';
 import 'package:wisdom_pos_test/ui/menu/home/service_ticket_by_category_list.dart';
 import 'package:wisdom_pos_test/ui/menu/home/service_ticket_list.dart';
 import 'package:wisdom_pos_test/ui/menu/search/search_ticket_page.dart';
+import 'package:wisdom_pos_test/ui/widgets/button_icon.dart';
 
 import '../../data/models/service.dart';
 
@@ -23,31 +25,12 @@ class HomePage extends StatelessWidget {
   Widget _buildCategoryButton(BuildContext context, String label, IconData icon, bool isSelected) {
     return Column(
       children: [
-        Material(
-          color: Colors.transparent,
-          shape: const CircleBorder(),
-          child: InkWell(
-            onTap: () {
-              context.read<SalesBloc>().add(CategorySelected(label));
-            },
-            customBorder: const CircleBorder(),
-            splashColor: VColor.black.withOpacity(0.5),
-            highlightColor: VColor.black.withOpacity(0.3),
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isSelected ? Colors.white : Colors.transparent,
-                border: Border.all(color: Colors.white38),
-              ),
-              child: Icon(
-                icon,
-                color: isSelected ? Colors.blue.shade900 : Colors.white,
-                size: 35,
-              ),
-            ),
-          ),
+        VButtonIcon(
+          icon: icon,
+          isSelected: isSelected,
+          onTap: () {
+            context.read<SalesBloc>().add(CategorySelected(label));
+          },
         ),
         const SizedBox(
           height: 10,
@@ -218,9 +201,13 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildCategoryButton(context, 'All', Constans.iconList[0], selected == 'All'),
+          spaceHorizontalSmall,
           _buildCategoryButton(context, 'Dine In', Constans.iconList[1], selected == 'Dine In'),
+          spaceHorizontalSmall,
           _buildCategoryButton(context, 'Take Away', Constans.iconList[2], selected == 'Take Away'),
+          spaceHorizontalSmall,
           _buildCategoryButton(context, 'Delivery', Constans.iconList[3], selected == 'Delivery'),
+          spaceHorizontalSmall,
           _buildCategoryButton(context, 'General', Constans.iconList[4], selected == 'General'),
         ],
       ),
