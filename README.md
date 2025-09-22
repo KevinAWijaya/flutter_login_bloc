@@ -26,17 +26,6 @@ This project is a sample implementation of a **login page** using **Flutter** wi
 
 ---
 
-## 📂 Project Structure
-
-lib/
-┣ core/ # Core utilities, constants, themes
-┣ bloc/ # BLoC state management
-┣ data/ # Models, repositories, services
-┣ ui/ # Screens, widgets
-┗ main.dart # App entry point
-
----
-
 ## 📌 Notes
 
 - Make sure to use JDK 17 and NDK 26 for Android build.
