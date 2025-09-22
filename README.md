@@ -1,7 +1,6 @@
 # 🚀 Flutter Login BLoC
 
-A simple **Flutter Login App** built with **BLoC state management**.  
-This project is focused on clean architecture and multi-platform support.
+This project is a sample implementation of a **login page** using **Flutter** with **BLoC (Business Logic Component)** architecture.  
 
 ---
 
@@ -24,6 +23,17 @@ This project is focused on clean architecture and multi-platform support.
 
 ### 🍏 iOS
 - Not implemented  
+
+---
+
+## 📂 Project Structure
+
+lib/
+┣ core/ # Core utilities, constants, themes
+┣ bloc/ # BLoC state management
+┣ data/ # Models, repositories, services
+┣ ui/ # Screens, widgets
+┗ main.dart # App entry point
 
 ---
 
