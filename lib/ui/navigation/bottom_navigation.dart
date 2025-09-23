@@ -4,7 +4,6 @@ import 'package:wisdom_pos_test/bloc/navigation/navigation_bloc.dart';
 import 'package:wisdom_pos_test/bloc/navigation/navigation_event.dart';
 import 'package:wisdom_pos_test/bloc/navigation/navigation_state.dart';
 import 'package:wisdom_pos_test/core/color.dart';
-import 'package:wisdom_pos_test/core/constants/size.dart';
 
 class CustomBottomNavigationBarPage extends StatelessWidget {
   const CustomBottomNavigationBarPage({super.key});
@@ -17,42 +16,34 @@ class CustomBottomNavigationBarPage extends StatelessWidget {
         if (state is NavigationSelected) {
           selectedIndex = state.selectedIndex;
         }
-        return BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: selectedIndex,
-          onTap: (index) {
+
+        return NavigationBar(
+          selectedIndex: selectedIndex,
+          backgroundColor: VColor.surfaceContainerHighest,
+          indicatorColor: VColor.secondaryContainer,
+          onDestinationSelected: (index) {
             context.read<NavigationBloc>().add(SelectTabEvent(index));
           },
-          backgroundColor: VColor.surfaceContainerHighest,
-          selectedItemColor: VColor.onSurface,
-          unselectedItemColor: VColor.onSurface,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          items: [
-            _buildNavItem(Icons.home, "Home", 0, selectedIndex),
-            _buildNavItem(Icons.shopping_cart, "New Order", 1, selectedIndex),
-            _buildNavItem(Icons.bar_chart, "Report", 2, selectedIndex),
-            _buildNavItem(Icons.menu, "Menu", 3, selectedIndex),
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.home),
+              label: "Home",
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.shopping_cart),
+              label: "New Order",
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.bar_chart),
+              label: "Report",
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.menu),
+              label: "Menu",
+            ),
           ],
         );
       },
-    );
-  }
-
-  BottomNavigationBarItem _buildNavItem(IconData icon, String label, int index, int selectedIndex) {
-    return BottomNavigationBarItem(
-      icon: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: index == selectedIndex ? VColor.secondaryContainer : Colors.transparent,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: marginMedium, vertical: marginSmall),
-        child: Icon(
-          icon,
-          color: index == selectedIndex ? VColor.onSecondaryContainer : VColor.onSurface,
-        ),
-      ),
-      label: label,
     );
   }
 }
