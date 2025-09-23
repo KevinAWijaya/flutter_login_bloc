@@ -31,7 +31,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: VColor.primary,
       body: Center(
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) async {
@@ -76,11 +75,11 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: VColor.onSurface,
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const Text("Login to your account", style: TextStyle(color: Colors.white70)),
+                          const Text("Login to your account", style: TextStyle(color: VColor.onSurface)),
                           const SizedBox(height: 30),
                           TextField(
                             controller: emailController,
@@ -138,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                                     },
                                     splashColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
-                                    child: const Text("Remember me", style: TextStyle(color: Colors.white))),
+                                    child: const Text("Remember me", style: TextStyle(color: VColor.onSurface))),
                               ],
                             ),
                           ),
