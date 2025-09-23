@@ -4,6 +4,7 @@ import 'package:wisdom_pos_test/bloc/navigation/navigation_bloc.dart';
 import 'package:wisdom_pos_test/bloc/navigation/navigation_event.dart';
 import 'package:wisdom_pos_test/bloc/navigation/navigation_state.dart';
 import 'package:wisdom_pos_test/core/color.dart';
+import 'package:wisdom_pos_test/core/constants/size.dart';
 
 class CustomBottomNavigationBarPage extends StatelessWidget {
   const CustomBottomNavigationBarPage({super.key});
@@ -22,7 +23,7 @@ class CustomBottomNavigationBarPage extends StatelessWidget {
           onTap: (index) {
             context.read<NavigationBloc>().add(SelectTabEvent(index));
           },
-          backgroundColor: VColor.onSurfaceContainer,
+          backgroundColor: VColor.surfaceContainerHighest,
           selectedItemColor: VColor.onSurface,
           unselectedItemColor: VColor.onSurface,
           showSelectedLabels: true,
@@ -43,12 +44,12 @@ class CustomBottomNavigationBarPage extends StatelessWidget {
       icon: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: index == selectedIndex ? Colors.blue : Colors.transparent,
+          color: index == selectedIndex ? VColor.secondaryContainer : Colors.transparent,
         ),
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(horizontal: marginMedium, vertical: marginSmall),
         child: Icon(
           icon,
-          color: index == selectedIndex ? Colors.white : VColor.onSurface,
+          color: index == selectedIndex ? VColor.onSecondaryContainer : VColor.onSurface,
         ),
       ),
       label: label,

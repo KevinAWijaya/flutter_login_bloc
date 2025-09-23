@@ -38,11 +38,11 @@ class VColor {
   static const Color surface = Color(0xFFf7fbf1);
   static const Color onSurface = Color(0xFF181d17);
 
-  static const Color onSurfaceContainerLowest = Color(0xFFffffff);
-  static const Color onSurfaceContainerLow = Color(0xFFf1f5ec);
-  static const Color onSurfaceContainer = Color(0xFFebefe6);
-  static const Color onSurfaceContainerHigh = Color(0xFFe6e9e0);
-  static const Color onSurfaceContainerHighest = Color(0xFFe0e4db);
+  static const Color surfaceContainerLowest = Color(0xFFffffff);
+  static const Color surfaceContainerLow = Color(0xFFf1f5ec);
+  static const Color surfaceContainer = Color(0xFFebefe6);
+  static const Color surfaceContainerHigh = Color(0xFFe6e9e0);
+  static const Color surfaceContainerHighest = Color(0xFFe0e4db);
 
   // outline
   static const Color outline = Color(0xFF72796f);

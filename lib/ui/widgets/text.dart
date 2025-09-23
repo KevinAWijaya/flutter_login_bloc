@@ -25,7 +25,7 @@ class VText extends StatelessWidget {
     this.decoration,
     this.maxLines,
     this.align,
-    this.color = VColor.black,
+    this.color = VColor.onSurface,
     this.fontWeight,
     this.fontStyle,
     this.isBold = false,

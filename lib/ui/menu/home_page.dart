@@ -7,6 +7,7 @@ import 'package:wisdom_pos_test/bloc/service/sales_event.dart';
 import 'package:wisdom_pos_test/bloc/service/sales_state.dart';
 import 'package:wisdom_pos_test/core/color.dart';
 import 'package:wisdom_pos_test/core/constants/constants.dart';
+import 'package:wisdom_pos_test/core/constants/size.dart';
 import 'package:wisdom_pos_test/core/constants/space.dart';
 import 'package:wisdom_pos_test/data/models/ticket.dart';
 import 'package:wisdom_pos_test/data/repositories/auth_repository.dart';
@@ -16,6 +17,7 @@ import 'package:wisdom_pos_test/ui/menu/home/service_ticket_by_category_list.dar
 import 'package:wisdom_pos_test/ui/menu/home/service_ticket_list.dart';
 import 'package:wisdom_pos_test/ui/menu/search/search_ticket_page.dart';
 import 'package:wisdom_pos_test/ui/widgets/button_icon.dart';
+import 'package:wisdom_pos_test/ui/widgets/text.dart';
 
 import '../../data/models/service.dart';
 
@@ -32,13 +34,11 @@ class HomePage extends StatelessWidget {
             context.read<SalesBloc>().add(CategorySelected(label));
           },
         ),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(
+        spaceVerticalSmall,
+        VText(
           label,
-          style: const TextStyle(color: Colors.white, fontSize: 12),
-        ),
+          fontSize: textSizeSmall,
+        )
       ],
     );
   }
@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime now = DateFormat("yyyy-MM-dd").parse(DateTime(2024, 8, 5).toString());
     return Scaffold(
-      backgroundColor: VColor.primary,
+      backgroundColor: VColor.surface,
       body: SafeArea(
         child: BlocProvider(
           create: (context) =>
@@ -128,19 +128,19 @@ class HomePage extends StatelessWidget {
                   onTap: onPickDate,
                   child: Row(
                     children: [
-                      Text(
+                      VText(
                         formattedDate,
-                        style: const TextStyle(color: Colors.white, fontSize: 16),
+                        fontSize: textSizeLarge,
                       ),
-                      const SizedBox(width: 4),
-                      const Icon(Icons.keyboard_arrow_down, color: Colors.white),
+                      spaceHorizontalSuperSmall,
+                      const Icon(Icons.keyboard_arrow_down, color: VColor.onSurface),
                     ],
                   ),
                 ),
-                const SizedBox(height: 5),
-                Text(
+                spaceVerticalSuperSmall,
+                VText(
                   'Sales: ${tickets.length} · \$${grandTotal.toStringAsFixed(2)}',
-                  style: const TextStyle(color: Colors.white70),
+                  color: VColor.onSurface.withValues(alpha: 0.5),
                 ),
               ],
             ),
@@ -161,13 +161,13 @@ class HomePage extends StatelessWidget {
                 },
                 icon: const Icon(
                   Icons.search,
-                  color: Colors.white,
-                  size: 28,
+                  color: VColor.onSurface,
+                  size: iconMedium,
                 ),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
-              const SizedBox(width: 20),
+              spaceHorizontalLarge,
               IconButton(
                 onPressed: () async {
                   context.read<SalesBloc>().add(LogOut());
@@ -183,7 +183,7 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.logout, color: Colors.white, size: 28),
+                icon: const Icon(Icons.logout, color: VColor.onSurface, size: iconMedium),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
@@ -196,7 +196,7 @@ class HomePage extends StatelessWidget {
 
   Widget _categoryMenu(BuildContext context, String selected) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: marginLarge),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -219,7 +219,7 @@ class HomePage extends StatelessWidget {
       return Container(
         constraints: const BoxConstraints(minHeight: 800),
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: VColor.surfaceContainer,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: ServiceTicketList(groupedTickets: groupedTickets),
@@ -228,7 +228,7 @@ class HomePage extends StatelessWidget {
       return Container(
         constraints: const BoxConstraints(minHeight: 800),
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: VColor.surfaceContainer,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: ServiceTicketByGroupList(groupedTickets: groupedTickets),

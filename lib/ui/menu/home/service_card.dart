@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:wisdom_pos_test/core/color.dart';
+import 'package:wisdom_pos_test/core/constants/size.dart';
+import 'package:wisdom_pos_test/core/constants/space.dart';
 import 'package:wisdom_pos_test/data/models/service.dart';
 import 'package:wisdom_pos_test/data/models/ticket.dart';
+import 'package:wisdom_pos_test/ui/widgets/text.dart';
 
 class ServiceCard extends StatefulWidget {
   final Service service;
@@ -25,9 +28,9 @@ class _ServiceCardState extends State<ServiceCard> {
     final remainingCount = tickets.length - 2;
 
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(marginMedium),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: VColor.surfaceContainer,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,30 +46,26 @@ class _ServiceCardState extends State<ServiceCard> {
                   Text(
                     widget.service.name ?? "No Service",
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: textSizeLarge,
                       fontWeight: FontWeight.w700,
                       color: VColor.primary,
                     ),
                   ),
-                  const SizedBox(
-                    width: 2,
-                  ),
+                  spaceHorizontalSuperSmall,
                   Icon(
                     _expanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                     color: VColor.primary,
-                    size: 18,
+                    size: textSizeLarge,
                   ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  VText(
                     "Sales: ${tickets.length} · \$${tickets.fold<double>(0, (sum, t) => sum + (t.grandTotal ?? 0))}",
-                    style: const TextStyle(
-                      color: VColor.primary,
-                      fontSize: 12,
-                    ),
+                    fontSize: textSizeSmall,
+                    color: VColor.primary,
                   ),
                   const Text(
                     "+ New Sales",
@@ -80,27 +79,25 @@ class _ServiceCardState extends State<ServiceCard> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          spaceVerticalSmall,
 
           // Tickets
           Container(
-            decoration: BoxDecoration(color: VColor.backgroundCard, borderRadius: BorderRadius.circular(10)),
+            decoration: BoxDecoration(color: VColor.surfaceContainerHigh, borderRadius: BorderRadius.circular(10)),
             child: tickets.isEmpty
                 ? Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 12),
-                    decoration: BoxDecoration(
-                      color: VColor.backgroundCard,
-                      borderRadius: BorderRadius.circular(12),
+                    padding: const EdgeInsets.symmetric(vertical: marginMedium, horizontal: marginSmall),
+                    decoration: const BoxDecoration(
+                      color: VColor.surfaceContainerHigh,
+                      borderRadius: borderRadiusMedium,
                     ),
-                    child: const Text(
+                    child: const VText(
                       "No Record Found",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: VColor.primary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      fontSize: textSizeLarge,
+                      isBold: true,
+                      color: VColor.primary,
+                      align: TextAlign.center,
                     ),
                   )
                 : Column(
@@ -124,11 +121,11 @@ class _ServiceCardState extends State<ServiceCard> {
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: VColor.backgroundCard,
+                                  color: VColor.surfaceContainerHigh,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.3),
+                                      color: Colors.black.withValues(alpha: 0.3),
                                       blurRadius: 2,
                                       offset: const Offset(0, 3),
                                     ),
@@ -174,7 +171,7 @@ class _ServiceCardState extends State<ServiceCard> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       decoration: BoxDecoration(
-        color: VColor.backgroundCard,
+        color: VColor.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -191,12 +188,12 @@ class _ServiceCardState extends State<ServiceCard> {
             child: ticket.paid != null
                 ? const Icon(
                     Icons.check,
-                    color: VColor.white,
+                    color: VColor.onPrimary,
                   )
                 : Text(
                     createdTime,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: VColor.onPrimary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
