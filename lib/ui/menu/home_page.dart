@@ -13,13 +13,12 @@ import 'package:wisdom_pos_test/data/models/ticket.dart';
 import 'package:wisdom_pos_test/data/repositories/auth_repository.dart';
 import 'package:wisdom_pos_test/data/repositories/session_repository.dart';
 import 'package:wisdom_pos_test/ui/auth/login_page.dart';
-import 'package:wisdom_pos_test/ui/menu/home/service_ticket_by_category_list.dart';
-import 'package:wisdom_pos_test/ui/menu/home/service_ticket_list.dart';
 import 'package:wisdom_pos_test/ui/menu/search/search_ticket_page.dart';
 import 'package:wisdom_pos_test/ui/widgets/button_icon.dart';
 import 'package:wisdom_pos_test/ui/widgets/text.dart';
 
 import '../../data/models/service.dart';
+import 'home/service_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -80,22 +79,37 @@ class HomePage extends StatelessWidget {
                       ),
                 );
 
-                return SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _header(
+                return CustomScrollView(
+                  slivers: [
+                    // Header
+                    SliverToBoxAdapter(
+                      child: _header(
                         tickets: tickets,
                         grandTotal: totalGrandTotal,
                         selectedDate: state.selectedDate,
                         onPickDate: () => _pickDate(context, state.selectedDate),
                         context: context,
                       ),
-                      _categoryMenu(context, selected),
-                      const SizedBox(height: 16),
-                      _servicesList(groupedTickets, selected),
-                    ],
-                  ),
+                    ),
+
+                    // Category menu
+                    SliverToBoxAdapter(
+                      child: _categoryMenu(context, selected),
+                    ),
+
+                    SliverToBoxAdapter(child: spaceVerticalMedium),
+
+                    // Service list yang scrollable
+                    _servicesList(groupedTickets, selected),
+
+                    // filler biar background bawah sama
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Container(
+                        color: VColor.surfaceContainer,
+                      ),
+                    ),
+                  ],
                 );
               }
 
@@ -216,22 +230,60 @@ class HomePage extends StatelessWidget {
 
   Widget _servicesList(List<MapEntry<Service, List<Ticket>>> groupedTickets, String selected) {
     if (selected == "All") {
-      return Container(
-        constraints: const BoxConstraints(minHeight: 800),
-        decoration: const BoxDecoration(
-          color: VColor.surfaceContainer,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      return SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            final entry = groupedTickets[index];
+            final service = entry.key;
+            final tickets = entry.value;
+
+            return Container(
+              decoration: const BoxDecoration(
+                color: VColor.surfaceContainer,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: marginMedium),
+                child: ServiceCard(
+                  service: service,
+                  tickets: tickets,
+                ),
+              ),
+            );
+          },
+          childCount: groupedTickets.length,
         ),
-        child: ServiceTicketList(groupedTickets: groupedTickets),
       );
     } else {
-      return Container(
-        constraints: const BoxConstraints(minHeight: 800),
-        decoration: const BoxDecoration(
-          color: VColor.surfaceContainer,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      final entry = groupedTickets[0];
+      final service = entry.key;
+      final tickets = entry.value;
+
+      Service openService = Service(id: service.id, name: "Open");
+      final openTickets = tickets.where((element) => element.paid == null).toList();
+      Service closeService = Service(id: service.id, name: "Closed");
+      final closedTickets = tickets.where((element) => element.paid != null).toList();
+
+      return SliverList(
+        delegate: SliverChildListDelegate(
+          [
+            Container(
+              decoration: const BoxDecoration(
+                color: VColor.surfaceContainer,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: marginMedium),
+                child: Column(
+                  children: [
+                    ServiceCard(service: openService, tickets: openTickets),
+                    ServiceCard(service: closeService, tickets: closedTickets),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-        child: ServiceTicketByGroupList(groupedTickets: groupedTickets),
       );
     }
   }
