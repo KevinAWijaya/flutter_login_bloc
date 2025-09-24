@@ -30,22 +30,22 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.search, color: Colors.white, size: 20),
+                  const Icon(Icons.search, color: VColor.onSurface, size: 20),
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextField(
                       controller: _controller,
                       onChanged: widget.onChanged,
-                      style: const TextStyle(color: Colors.white),
-                      cursorColor: Colors.white,
+                      style: const TextStyle(color: VColor.onSurface),
+                      cursorColor: VColor.onSurface,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: VColor.onSurface),
                       ),
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white),
+                    icon: const Icon(Icons.close, color: VColor.onSurface),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -66,7 +66,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               color: VColor.surfaceContainerHigh,
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.qr_code_scanner, color: Colors.white),
+            child: const Icon(Icons.qr_code_scanner, color: VColor.onSurface),
           ),
         )
       ],
