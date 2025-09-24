@@ -1,6 +1,8 @@
 # 🚀 Flutter Login BLoC
 
-This project is a sample implementation of a **login page** using **Flutter** with **BLoC (Business Logic Component)** architecture.  
+This project is a template I use when starting new projects.
+Everything is meant to be simple, clean, and easy to read.
+Feel free to upgrade it (please 0_0)
 
 ---
 
