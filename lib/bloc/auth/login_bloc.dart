@@ -1,25 +1,29 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:wisdom_pos_test/core/globals.dart' as globals;
 import 'package:wisdom_pos_test/data/repositories/auth_repository.dart';
-import 'package:wisdom_pos_test/data/repositories/session_repository.dart';
 
 import 'login_event.dart';
 import 'login_state.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
+class LoginBloc extends HydratedBloc<LoginEvent, LoginState> {
   final AuthRepository authRepository;
-  final SessionRepository sessionRepository;
 
-  LoginBloc(this.authRepository, this.sessionRepository) : super(const LoginState()) {
+  LoginBloc(this.authRepository) : super(const LoginState()) {
     on<LoginSubmitted>(_onLoginSubmitted);
     on<ToggleRememberMe>(_onToggleRememberMe);
     on<InitialLoginCheck>(_onInitialLoginCheck);
+    on<LogoutRequested>(_onLogoutRequested);
   }
 
   Future<void> _onLoginSubmitted(
     LoginSubmitted event,
     Emitter<LoginState> emit,
   ) async {
-    emit(state.copyWith(status: LoginStatus.loading));
+    emit(state.copyWith(
+      status: LoginStatus.loading,
+      email: event.email,
+      password: event.password,
+    ));
 
     try {
       final user = await authRepository.login(
@@ -27,19 +31,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         password: event.password,
       );
 
-      if (state.rememberMe) {
-        await sessionRepository.saveCredentials(
-          event.email.trim(),
-          event.password.trim(),
-          true,
-        );
-      } else {
-        await sessionRepository.clearCredentials();
-      }
-
-      emit(state.copyWith(status: LoginStatus.success, user: user));
+      emit(state.copyWith(
+        status: LoginStatus.success,
+        user: user,
+      ));
     } catch (e) {
-      emit(state.copyWith(status: LoginStatus.failure, errorMessage: e.toString()));
+      emit(state.copyWith(
+        status: LoginStatus.failure,
+        errorMessage: e.toString(),
+      ));
     }
   }
 
@@ -58,11 +58,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     InitialLoginCheck event,
     Emitter<LoginState> emit,
   ) async {
-    final (username, password, rememberMe) = await sessionRepository.loadCredentials();
-
-    if (rememberMe && username != null && username.isNotEmpty && password != null && password.isNotEmpty) {
-      emit(state.copyWith(rememberMe: true));
-      add(LoginSubmitted(username, password));
+    if (state.rememberMe && state.email.isNotEmpty && state.password.isNotEmpty) {
+      emit(state.copyWith(status: LoginStatus.loading));
+      add(LoginSubmitted(state.email, state.password));
     }
   }
+
+  Future<void> _onLogoutRequested(
+    LogoutRequested event,
+    Emitter<LoginState> emit,
+  ) async {
+    globals.accessToken = null;
+    emit(const LoginState());
+    await clear();
+  }
+
+  @override
+  LoginState? fromJson(Map<String, dynamic> json) => LoginState.fromJson(json);
+
+  @override
+  Map<String, dynamic>? toJson(LoginState state) => state.toJson();
 }

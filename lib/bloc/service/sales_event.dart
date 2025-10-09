@@ -16,5 +16,3 @@ class DateSelected extends SalesEvent {
 
   DateSelected(this.selectedDate);
 }
-
-class LogOut extends SalesEvent {}

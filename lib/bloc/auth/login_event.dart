@@ -20,3 +20,5 @@ class LoginSubmitted extends LoginEvent {
 class ToggleRememberMe extends LoginEvent {}
 
 class InitialLoginCheck extends LoginEvent {}
+
+class LogoutRequested extends LoginEvent {}

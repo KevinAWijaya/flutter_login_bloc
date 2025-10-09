@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:wisdom_pos_test/bloc/auth/login_bloc.dart';
+import 'package:wisdom_pos_test/bloc/auth/login_event.dart';
 import 'package:wisdom_pos_test/bloc/service/sales_bloc.dart';
 import 'package:wisdom_pos_test/bloc/service/sales_event.dart';
 import 'package:wisdom_pos_test/bloc/service/sales_state.dart';
@@ -10,8 +11,6 @@ import 'package:wisdom_pos_test/core/constants/constants.dart';
 import 'package:wisdom_pos_test/core/constants/size.dart';
 import 'package:wisdom_pos_test/core/constants/space.dart';
 import 'package:wisdom_pos_test/data/models/ticket.dart';
-import 'package:wisdom_pos_test/data/repositories/auth_repository.dart';
-import 'package:wisdom_pos_test/data/repositories/session_repository.dart';
 import 'package:wisdom_pos_test/ui/auth/login_page.dart';
 import 'package:wisdom_pos_test/ui/menu/search/search_ticket_page.dart';
 import 'package:wisdom_pos_test/ui/widgets/button_icon.dart';
@@ -49,8 +48,9 @@ class HomePage extends StatelessWidget {
       backgroundColor: VColor.surface,
       body: SafeArea(
         child: BlocProvider(
-          create: (context) =>
-              SalesBloc(serviceRepository: RepositoryProvider.of(context), ticketRepository: RepositoryProvider.of(context))..add(LoadServices(now)),
+          create: (context) => SalesBloc(
+              serviceRepository: RepositoryProvider.of(context), ticketRepository: RepositoryProvider.of(context))
+            ..add(LoadServices(now)),
           child: BlocBuilder<SalesBloc, SalesState>(
             builder: (context, state) {
               if (state is SalesLoading) {
@@ -184,17 +184,10 @@ class HomePage extends StatelessWidget {
               spaceHorizontalLarge,
               IconButton(
                 onPressed: () async {
-                  context.read<SalesBloc>().add(LogOut());
-                  final authRepo = RepositoryProvider.of<AuthRepository>(context);
-                  final sessonRepo = RepositoryProvider.of<SessionRepository>(context);
+                  context.read<LoginBloc>().add(LogoutRequested());
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => BlocProvider(
-                        create: (_) => LoginBloc(authRepo, sessonRepo),
-                        child: const LoginPage(),
-                      ),
-                    ),
+                    MaterialPageRoute(builder: (_) => const LoginPage()),
                   );
                 },
                 icon: const Icon(Icons.logout, color: VColor.onSurface, size: iconMedium),
